@@ -429,10 +429,12 @@
   </div>
 </section>
 
-<!-- BAND -->
+<!-- DEVICES (Hume Band + Lumen) -->
 <section class="view" id="band">
-  <h1 class="tabtitle">Hume Band</h1>
-  <p class="tabsub">Your band can't sync straight into this app, so it's a quick daily tap-in. Glance at the Hume Health app, type the numbers here.</p>
+  <h1 class="tabtitle">Devices</h1>
+  <p class="tabsub">Neither device syncs straight into this app, so these are quick tap-ins. Glance at each device's app, type the numbers here.</p>
+
+  <div class="sectlabel" style="margin:4px 4px 10px">Hume Band</div>
 
   <div class="bandnote">Fastest way: open the Hume Health app and this app side by side (Android split-screen), then copy today's numbers over. ~15 seconds.</div>
 
@@ -459,6 +461,37 @@
     <div class="sectlabel" style="margin:4px 0 10px">Recent days</div>
     <div id="bandhistory"></div>
   </div>
+
+  <div class="sectlabel" style="margin:26px 4px 10px">Lumen</div>
+
+  <div class="bandnote">Take your Lumen reading first thing in the morning, before coffee or food, then enter it here.</div>
+
+  <div class="card card-pad">
+    <div class="sectlabel" style="margin:0 0 12px">Log this morning</div>
+    <div class="bandgrid">
+      <div class="bfield"><label>Lumen Level (1-5)</label><input id="l_level" type="number" min="1" max="5" inputmode="numeric" placeholder="1-5"></div>
+      <div class="bfield"><label>Flex Score (0-21)</label><input id="l_flex" type="number" min="0" max="21" inputmode="numeric" placeholder="optional"></div>
+    </div>
+    <div class="sectlabel" style="margin:14px 0 8px">Today's carb plan (from Lumen)</div>
+    <div class="pchips" id="l_planchips">
+      <button class="pchip" onclick="setLumenPlan('Low')">Low carb</button>
+      <button class="pchip" onclick="setLumenPlan('Med')">Medium</button>
+      <button class="pchip" onclick="setLumenPlan('High')">High carb</button>
+    </div>
+    <button class="btn" style="width:100%;margin-top:14px" onclick="logLumen()">Save Lumen reading</button>
+    <p class="note" style="margin-top:10px;padding:0">Lumen's framing: 1-2 means you woke up burning fat (the goal most mornings), 4-5 means running on carbs. For prediabetes, the real win is the Flex score climbing over weeks. Not a medical reading.</p>
+  </div>
+
+  <div class="card card-pad">
+    <div class="sectlabel" style="margin:0 0 6px">Today so far</div>
+    <div id="lumentoday"></div>
+  </div>
+
+  <div class="card card-pad">
+    <svg class="spark" id="lumenspark" viewBox="0 0 300 70" preserveAspectRatio="none"></svg>
+    <div class="sectlabel" style="margin:4px 0 10px">Recent mornings</div>
+    <div id="lumenhistory"></div>
+  </div>
 </section>
 
 <nav>
@@ -469,7 +502,7 @@
   <button class="nav-btn" data-v="food" onclick="go('food')">
     <svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 002-2V2M5 2v9M9 2v20M21 15V2a5 5 0 00-3 5v6c0 1.1.9 2 2 2h1z"/></svg>Food</button>
   <button class="nav-btn" data-v="band" onclick="go('band')">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M8 4l1-2h6l1 2M8 20l1 2h6l1-2"/></svg>Band</button>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M8 4l1-2h6l1 2M8 20l1 2h6l1-2"/></svg>Devices</button>
   <button class="nav-btn" data-v="progress" onclick="go('progress')">
     <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M19 9l-5 5-4-4-3 3"/></svg>Progress</button>
 </nav>
@@ -521,9 +554,10 @@ var FOOD={
 };
 
 /* ---------- state ---------- */
-var state=load('jp_state',{week:1,weights:[],customHabits:[],days:{},band:{}});
+var state=load('jp_state',{week:1,weights:[],customHabits:[],days:{},band:{},lumen:{}});
 if(!state.days)state.days={};
 if(!state.band)state.band={};
+if(!state.lumen)state.lumen={};
 function dayData(){var k=todayKey();if(!state.days[k])state.days[k]={checks:{},water:0};return state.days[k];}
 function persist(){save('jp_state',state);}
 
@@ -691,6 +725,45 @@ function go(v){
   window.scrollTo(0,0);
 }
 
+/* ---------- lumen ---------- */
+var lumenPlanSel=null;
+function setLumenPlan(p){
+  lumenPlanSel=(lumenPlanSel===p)?null:p;
+  var chips=document.querySelectorAll('#l_planchips .pchip');
+  var labels={'Low':'Low carb','Med':'Medium','High':'High carb'};
+  chips.forEach(function(c){c.style.background='';c.style.color='';
+    if(lumenPlanSel&&c.textContent===labels[lumenPlanSel]){c.style.background='var(--green)';c.style.color='#fff';}});
+}
+function logLumen(){
+  var k=todayKey();
+  var lvl=document.getElementById('l_level').value, flex=document.getElementById('l_flex').value;
+  var e={level:lvl===''?null:parseFloat(lvl),flex:flex===''?null:parseFloat(flex),plan:lumenPlanSel};
+  state.lumen[k]=Object.assign(state.lumen[k]||{},e);persist();
+  document.getElementById('l_level').value='';document.getElementById('l_flex').value='';
+  lumenPlanSel=null;setLumenPlan(null);renderLumen();
+}
+function renderLumen(){
+  var k=todayKey(),t=state.lumen[k]||{};
+  var planTxt={'Low':'Low carb','Med':'Medium','High':'High carb'};
+  var rows=[['Lumen Level',t.level,t.level!=null?' / 5':''],['Flex Score',t.flex,t.flex!=null?' / 21':''],['Carb plan',t.plan?planTxt[t.plan]:null,'']];
+  var any=rows.some(function(r){return r[1]!=null;});
+  document.getElementById('lumentoday').innerHTML=any?rows.filter(function(r){return r[1]!=null;}).map(function(r){
+    return'<div class="bandstat"><span>'+r[0]+'</span><b>'+r[1]+r[2]+'</b></div>';}).join(''):'<p class="note" style="padding:0">No reading logged this morning.</p>';
+  var keys=Object.keys(state.lumen).sort().reverse().slice(0,7);
+  document.getElementById('lumenhistory').innerHTML=keys.length?keys.map(function(dk){
+    var b=state.lumen[dk];var bits=[];
+    if(b.level!=null)bits.push('Level '+b.level);if(b.flex!=null)bits.push('Flex '+b.flex);if(b.plan)bits.push(planTxt[b.plan]);
+    return'<div class="bandstat"><span>'+dk+'</span><b>'+(bits.join(' \u00b7 ')||'\u2014')+'</b></div>';}).join(''):'<p class="note" style="padding:0">Log a few mornings to build history.</p>';
+  // level sparkline (1-5)
+  var sp=document.getElementById('lumenspark');
+  var sk=Object.keys(state.lumen).sort();var sv=sk.map(function(dk){return state.lumen[dk].level;}).filter(function(x){return x!=null;});
+  if(sv.length<2){sp.innerHTML='<text x="150" y="40" text-anchor="middle" fill="#8c8676" font-size="11" font-family="Hanken Grotesk">Log 2+ mornings to see your trend</text>';return;}
+  var mn=1,mx=5,rng=4;
+  var pts=sv.map(function(v,i){return(10+i/(sv.length-1)*280)+','+(60-((v-mn)/rng)*50);});
+  sp.innerHTML='<polyline points="'+pts.join(' ')+'" fill="none" stroke="#2f5e4e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+
+    pts.map(function(p){var xy=p.split(',');return'<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="3" fill="#c9772f"/>';}).join('');
+}
+
 /* ---------- text size ---------- */
 function applyFont(){document.documentElement.style.setProperty('--fs',state.fs||1.25);}
 function bumpFont(dir){
@@ -703,7 +776,7 @@ function bumpFont(dir){
 (function(){
   var dl=document.getElementById('dateline');
   var dt=new Date();dl.textContent=dt.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-  applyFont();updateWeekBadge();renderToday();renderPlan();renderFood();renderProgress();renderBand();
+  applyFont();updateWeekBadge();renderToday();renderPlan();renderFood();renderProgress();renderBand();renderLumen();
 })();
 </script>
 </body>
