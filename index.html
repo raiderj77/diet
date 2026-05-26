@@ -18,6 +18,7 @@
 <style>
   html{font-size:18px;-webkit-text-size-adjust:100%}
   :root{
+    --fs:1.25;
     --paper:#f4eee2;
     --surface:#fffdf8;
     --surface-2:#faf5ea;
@@ -210,55 +211,63 @@
   h1.tabtitle{font-family:"Fraunces",serif;font-size:25px;font-weight:600;margin:6px 4px 4px}
   .tabsub{font-size:13.5px;color:var(--muted);margin:0 4px 18px;line-height:1.45}
 
-  /* ===== bigger, easier to read on a phone ===== */
-  body{font-size:17px;line-height:1.5}
+  /* ===== sizes scale with the in-app A-/A+ control (--fs) ===== */
+  body{font-size:calc(15px * var(--fs));line-height:1.5}
   img,svg{max-width:100%}
-  .date{font-size:34px}
-  .kicker{font-size:13px}
-  .weekbadge{font-size:15px;padding:9px 16px}
-  .prog-txt h2{font-size:21px}
-  .prog-txt p{font-size:15px}
-  .ring .pct b{font-size:24px}
-  .streak b{font-size:19px}
-  .streak span{font-size:14.5px}
-  .sectlabel{font-size:13px}
+  .date{font-size:calc(27px * var(--fs))}
+  .kicker{font-size:calc(11px * var(--fs))}
+  .weekbadge{font-size:calc(12.5px * var(--fs));padding:9px 16px}
+  .prog-txt h2{font-size:calc(17px * var(--fs))}
+  .prog-txt p{font-size:calc(12.5px * var(--fs))}
+  .ring .pct b{font-size:calc(20px * var(--fs))}
+  .streak b{font-size:calc(15.5px * var(--fs))}
+  .streak span{font-size:calc(12px * var(--fs))}
+  .sectlabel{font-size:calc(11px * var(--fs))}
   .row{padding:18px 16px}
-  .row .lbl{font-size:17.5px;line-height:1.4}
-  .box{width:28px;height:28px}
-  .row .time{font-size:13px;padding:4px 10px}
-  .water-head h3{font-size:19px}
-  .water-head .count{font-size:15px}
+  .row .lbl{font-size:calc(15px * var(--fs));line-height:1.4}
+  .box{width:28px;height:28px;flex:none}
+  .row .time{font-size:calc(11px * var(--fs));padding:4px 10px}
+  .water-head h3{font-size:calc(15.5px * var(--fs))}
+  .water-head .count{font-size:calc(12.5px * var(--fs))}
   .glass{width:34px;height:42px}
-  .pcard h3{font-size:19px}
-  .pbar-head .pnum{font-size:17px}
+  .pcard h3{font-size:calc(15.5px * var(--fs))}
+  .pbar-head .pnum{font-size:calc(14px * var(--fs))}
   .pbar{height:16px}
-  .pchip{font-size:15px;padding:10px 16px}
-  .note{font-size:15px;line-height:1.55}
-  .additem input{font-size:16.5px;padding:14px 15px}
-  .btn{font-size:16.5px;padding:14px 20px}
-  .phase-tag{font-size:12.5px}
-  .wk-num{font-size:14px;width:38px;height:38px}
-  .wk-ti{font-size:16.5px}
-  .wk-body li{font-size:15.5px;line-height:1.55}
-  .yesrule h2{font-size:23px}
-  .yesrule p{font-size:16px;line-height:1.55}
-  .fgroup h3{font-size:19px}
-  .pill{font-size:15px;padding:9px 15px}
-  .stat b{font-size:32px}
-  .stat span{font-size:12.5px}
-  .wlog input,.bfield input{font-size:17px;padding:14px 15px}
-  .wlist li{font-size:15.5px;padding:13px 4px}
-  .chk-item{font-size:15.5px;line-height:1.55}
-  .tabtitle{font-size:28px}
-  .tabsub{font-size:15.5px;line-height:1.5}
-  .bandnote{font-size:14.5px;line-height:1.55}
-  .bfield label{font-size:12px}
-  .bandstat{font-size:15.5px}
-  .nav-btn{font-size:11px;padding:9px 2px}
+  .pchip{font-size:calc(12.5px * var(--fs));padding:10px 16px}
+  .note{font-size:calc(12.5px * var(--fs));line-height:1.55}
+  .additem input{font-size:calc(14px * var(--fs));padding:14px 15px}
+  .btn{font-size:calc(14px * var(--fs));padding:14px 20px}
+  .phase-tag{font-size:calc(10.5px * var(--fs))}
+  .wk-num{font-size:calc(12px * var(--fs));width:40px;height:40px}
+  .wk-ti{font-size:calc(14px * var(--fs))}
+  .wk-body li{font-size:calc(13px * var(--fs));line-height:1.55}
+  .yesrule h2{font-size:calc(19px * var(--fs))}
+  .yesrule p{font-size:calc(13.5px * var(--fs));line-height:1.55}
+  .fgroup h3{font-size:calc(15.5px * var(--fs))}
+  .pill{font-size:calc(12.5px * var(--fs));padding:9px 15px}
+  .stat b{font-size:calc(26px * var(--fs))}
+  .stat span{font-size:calc(10.5px * var(--fs))}
+  .wlog input,.bfield input{font-size:calc(14.5px * var(--fs));padding:14px 15px}
+  .wlist li{font-size:calc(13px * var(--fs));padding:13px 4px}
+  .chk-item{font-size:calc(13px * var(--fs));line-height:1.55}
+  .tabtitle{font-size:calc(23px * var(--fs))}
+  .tabsub{font-size:calc(13px * var(--fs));line-height:1.5}
+  .bandnote{font-size:calc(12.5px * var(--fs));line-height:1.55}
+  .bfield label{font-size:calc(10.5px * var(--fs))}
+  .bandstat{font-size:calc(13px * var(--fs))}
+  .nav-btn{font-size:calc(9.5px * var(--fs));padding:9px 2px}
   .nav-btn svg{width:24px;height:24px}
-  /* a touch wider so big text breathes on phones */
   body{max-width:620px}
   nav{max-width:620px}
+
+  /* text-size control */
+  .fontctl{display:flex;align-items:center;gap:8px;margin-top:14px}
+  .fontctl .lab{font-size:calc(11px * var(--fs));color:var(--muted);font-weight:600;letter-spacing:.04em}
+  .fontctl button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);
+    color:var(--green-deep);font-family:"Fraunces",serif;font-weight:600;cursor:pointer;box-shadow:var(--shadow);line-height:1}
+  .fontctl button:active{background:var(--green);color:#fff}
+  .fontctl button.am{font-size:15px}
+  .fontctl button.ap{font-size:22px}
 </style>
 </head>
 <body>
@@ -267,6 +276,11 @@
   <div class="kicker">One day at a time</div>
   <div class="date" id="dateline">Today</div>
   <button class="weekbadge" id="weekbadge" onclick="go('plan')"><span class="dot"></span><span id="weeklabel">Week 1</span></button>
+  <div class="fontctl">
+    <span class="lab">TEXT SIZE</span>
+    <button class="am" onclick="bumpFont(-1)">A&minus;</button>
+    <button class="ap" onclick="bumpFont(1)">A+</button>
+  </div>
 </header>
 
 <!-- TODAY -->
@@ -677,11 +691,19 @@ function go(v){
   window.scrollTo(0,0);
 }
 
+/* ---------- text size ---------- */
+function applyFont(){document.documentElement.style.setProperty('--fs',state.fs||1.25);}
+function bumpFont(dir){
+  var v=Math.round(((state.fs||1.25)+dir*0.15)*100)/100;
+  v=Math.max(1.0,Math.min(2.0,v));
+  state.fs=v;persist();applyFont();
+}
+
 /* ---------- init ---------- */
 (function(){
   var dl=document.getElementById('dateline');
   var dt=new Date();dl.textContent=dt.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-  updateWeekBadge();renderToday();renderPlan();renderFood();renderProgress();renderBand();
+  applyFont();updateWeekBadge();renderToday();renderPlan();renderFood();renderProgress();renderBand();
 })();
 </script>
 </body>
