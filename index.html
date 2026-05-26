@@ -18,7 +18,7 @@
 <style>
   html{font-size:18px;-webkit-text-size-adjust:100%}
   :root{
-    --fs:1.25;
+    --fs:1.85;
     --paper:#f4eee2;
     --surface:#fffdf8;
     --surface-2:#faf5ea;
@@ -259,15 +259,6 @@
   .nav-btn svg{width:24px;height:24px}
   body{max-width:620px}
   nav{max-width:620px}
-
-  /* text-size control */
-  .fontctl{display:flex;align-items:center;gap:8px;margin-top:14px}
-  .fontctl .lab{font-size:calc(11px * var(--fs));color:var(--muted);font-weight:600;letter-spacing:.04em}
-  .fontctl button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);
-    color:var(--green-deep);font-family:"Fraunces",serif;font-weight:600;cursor:pointer;box-shadow:var(--shadow);line-height:1}
-  .fontctl button:active{background:var(--green);color:#fff}
-  .fontctl button.am{font-size:15px}
-  .fontctl button.ap{font-size:22px}
 </style>
 </head>
 <body>
@@ -276,11 +267,6 @@
   <div class="kicker">One day at a time</div>
   <div class="date" id="dateline">Today</div>
   <button class="weekbadge" id="weekbadge" onclick="go('plan')"><span class="dot"></span><span id="weeklabel">Week 1</span></button>
-  <div class="fontctl">
-    <span class="lab">TEXT SIZE</span>
-    <button class="am" onclick="bumpFont(-1)">A&minus;</button>
-    <button class="ap" onclick="bumpFont(1)">A+</button>
-  </div>
 </header>
 
 <!-- TODAY -->
@@ -764,19 +750,11 @@ function renderLumen(){
     pts.map(function(p){var xy=p.split(',');return'<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="3" fill="#c9772f"/>';}).join('');
 }
 
-/* ---------- text size ---------- */
-function applyFont(){document.documentElement.style.setProperty('--fs',state.fs||1.25);}
-function bumpFont(dir){
-  var v=Math.round(((state.fs||1.25)+dir*0.15)*100)/100;
-  v=Math.max(1.0,Math.min(2.0,v));
-  state.fs=v;persist();applyFont();
-}
-
 /* ---------- init ---------- */
 (function(){
   var dl=document.getElementById('dateline');
   var dt=new Date();dl.textContent=dt.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-  applyFont();updateWeekBadge();renderToday();renderPlan();renderFood();renderProgress();renderBand();renderLumen();
+  updateWeekBadge();renderToday();renderPlan();renderFood();renderProgress();renderBand();renderLumen();
 })();
 </script>
 </body>
