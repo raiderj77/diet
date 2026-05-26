@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="My Plan">
 <meta name="theme-color" content="#2f5e4e">
 <meta name="robots" content="noindex,nofollow">
 <title>My Plan</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%232f5e4e'/%3E%3Cpath d='M55 92l22 22 48-54' stroke='%23f4eee2' stroke-width='14' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22My%20Plan%22%2C%22short_name%22%3A%22My%20Plan%22%2C%22start_url%22%3A%22.%22%2C%22scope%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4eee2%22%2C%22theme_color%22%3A%22%232f5e4e%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520512%2520512%2527%253E%253Crect%2520width%253D%2527512%2527%2520height%253D%2527512%2527%2520rx%253D%2527110%2527%2520fill%253D%2527%25232f5e4e%2527%252F%253E%253Cpath%2520d%253D%2527M150%2520262l66%252066%2520146-160%2527%2520stroke%253D%2527%2523f4eee2%2527%2520stroke-width%253D%252740%2527%2520fill%253D%2527none%2527%2520stroke-linecap%253D%2527round%2527%2520stroke-linejoin%253D%2527round%2527%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  html{font-size:18px;-webkit-text-size-adjust:100%}
   :root{
     --paper:#f4eee2;
     --surface:#fffdf8;
@@ -203,6 +209,56 @@
 
   h1.tabtitle{font-family:"Fraunces",serif;font-size:25px;font-weight:600;margin:6px 4px 4px}
   .tabsub{font-size:13.5px;color:var(--muted);margin:0 4px 18px;line-height:1.45}
+
+  /* ===== bigger, easier to read on a phone ===== */
+  body{font-size:17px;line-height:1.5}
+  img,svg{max-width:100%}
+  .date{font-size:34px}
+  .kicker{font-size:13px}
+  .weekbadge{font-size:15px;padding:9px 16px}
+  .prog-txt h2{font-size:21px}
+  .prog-txt p{font-size:15px}
+  .ring .pct b{font-size:24px}
+  .streak b{font-size:19px}
+  .streak span{font-size:14.5px}
+  .sectlabel{font-size:13px}
+  .row{padding:18px 16px}
+  .row .lbl{font-size:17.5px;line-height:1.4}
+  .box{width:28px;height:28px}
+  .row .time{font-size:13px;padding:4px 10px}
+  .water-head h3{font-size:19px}
+  .water-head .count{font-size:15px}
+  .glass{width:34px;height:42px}
+  .pcard h3{font-size:19px}
+  .pbar-head .pnum{font-size:17px}
+  .pbar{height:16px}
+  .pchip{font-size:15px;padding:10px 16px}
+  .note{font-size:15px;line-height:1.55}
+  .additem input{font-size:16.5px;padding:14px 15px}
+  .btn{font-size:16.5px;padding:14px 20px}
+  .phase-tag{font-size:12.5px}
+  .wk-num{font-size:14px;width:38px;height:38px}
+  .wk-ti{font-size:16.5px}
+  .wk-body li{font-size:15.5px;line-height:1.55}
+  .yesrule h2{font-size:23px}
+  .yesrule p{font-size:16px;line-height:1.55}
+  .fgroup h3{font-size:19px}
+  .pill{font-size:15px;padding:9px 15px}
+  .stat b{font-size:32px}
+  .stat span{font-size:12.5px}
+  .wlog input,.bfield input{font-size:17px;padding:14px 15px}
+  .wlist li{font-size:15.5px;padding:13px 4px}
+  .chk-item{font-size:15.5px;line-height:1.55}
+  .tabtitle{font-size:28px}
+  .tabsub{font-size:15.5px;line-height:1.5}
+  .bandnote{font-size:14.5px;line-height:1.55}
+  .bfield label{font-size:12px}
+  .bandstat{font-size:15.5px}
+  .nav-btn{font-size:11px;padding:9px 2px}
+  .nav-btn svg{width:24px;height:24px}
+  /* a touch wider so big text breathes on phones */
+  body{max-width:620px}
+  nav{max-width:620px}
 </style>
 </head>
 <body>
